@@ -2,15 +2,20 @@
 <!DOCTYPE html>
 <html>
 
-    <head>
-    </head>
+<head>
+</head>
 
-    <body>
+<body>
 
-        <?php
-            include_once("connection.php");
-        ?>
+<?php
 
-    </body>
+array_map("htmlspecialchars", $_POST);
+include_once("connection.php");
+
+
+
+?>
+
+</body>
 
 </html>

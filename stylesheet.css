@@ -1,0 +1,13 @@
+.failedSign * {
+    border-style: double;
+    border-color: red;
+    color: red;
+    display: inline-block;
+}
+
+.lastUserAddedSign * {
+    border-style: dotted;
+    padding: 5px 5px 5px 5px;
+    margin: 5px 5px 5px 5px;
+    display: inline-block;
+}

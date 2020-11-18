@@ -3,7 +3,7 @@
 <html>
 
     <head>
-        <title> - Packed Lunch Ordering</title>
+        <title>Packed Lunch Ordering</title>
         <link rel="stylesheet" href="stylesheet.css">
     </head>
 
