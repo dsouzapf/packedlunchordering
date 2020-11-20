@@ -44,9 +44,6 @@
 
         array_map("htmlspecialchars", $_SESSION);
 
-        //TODO: uncomment once page works so far
-
-        /*
         if (isset($_SESSION["userRole"])) {
 
             $canAddStmt = $connection->prepare("SELECT permAddUsers FROM roles WHERE roleId=:roleId");
@@ -57,13 +54,13 @@
             $userCanAddUsers = $canAddStmt->fetch(PDO::FETCH_ASSOC)["permAddUsers"];
 
         }
-
-        if (!$userCanAddUsers) {
-
-            header("index.php");
+        
+        if (!$userCanAddUsers || !isset($_SESSION["userRole"])) {
+            
+            header("Location: index.php");
 
         }
-        */
+        
         ?>
 
         <form action="addUsersRun.php" method="POST">
@@ -74,7 +71,6 @@
             <!--Have dropdown menu for houses-->
             House:
             <select name="houseId">
-                <option value="null">None</option>
             <?php
             
             $getHousesStmt = $connection->prepare("SELECT houseId,fullName FROM houses");
@@ -90,6 +86,7 @@
             ?>
             </select><br>
 
+            <!--/*TAG: Change here for new permissions*/-->
             Can Add Users: <input type="checkbox" name="permAddUsers"><br>
             Can Submit Orders: <input type="checkbox" name="permSubmitOrders"><br>
 

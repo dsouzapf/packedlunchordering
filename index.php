@@ -9,7 +9,14 @@
 
     <body>
 
-        
+        <!--Display current user-->
+        <div id="currentUserDisplay" display="<?php print(isset($_SESSION["userId"])  ? "default" : "none") ?>">
+        <p>Logged in as: 
+        <?php print($_SESSION["username"]) ?>
+        </p>
+        </div>
+
+        <!--Links to pages if availible to user-->
 
     </body>
 

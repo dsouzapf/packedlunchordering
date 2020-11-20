@@ -23,19 +23,25 @@ if ($_ = $getUsernamesStmt->fetch(PDO::FETCH_ASSOC)) {
 
 $getUsernamesStmt->closeCursor();
 
-//TODO: Find roleId by allowed permissions
+include_once("findRoleId.php");
+/*TAG: Change here for new permissions*/
+$foundRoleId = getOrMakeRoleIdByPermissions($connection,
+$_POST["permAddUsers"] == true,
+$_POST["permSubmitOrders"] == true
+);
 
 $addUserStmt = $connection->prepare(
 "INSERT INTO users(userId,roleId,username,passwordHash,houseId)
 VALUES (NULL,:roleId,:username,SHA1(:password),:houseId)"
 );
 
+$addUserStmt->bindParam(":roleId", $foundRoleId);
+
 $addUserStmt->bindParam(":username", $_POST["username"]);
 
-//TODO: bind roleId once found
-
+include_once("passwordGeneration.php");
 $generatedPassword = generatePasswordFromSeed($_POST["passwordSeed"]);
-$addUserStmt->bindParam(":passwordHash", $generatedPassword);
+$addUserStmt->bindParam(":password", $generatedPassword);
 
 $addUserStmt->bindParam(":houseId", $_POST["houseId"]);
 
@@ -46,7 +52,7 @@ $connection=null;
 $_SESSION["lastUserUsername"] = $_POST["username"];
 $_SESSION["lastUserPassword"] = $generatedPassword;
 
-header("Location: addUser.php");
+header("Location: userManagement.php");
 
 ?>
 

@@ -19,7 +19,7 @@ $stmt->execute();
 $connection = null;
 
 $userObject = $stmt->fetch(PDO::FETCH_ASSOC);
-if (strcmp($userObject["password"], sha1($_POST["password"])) == 0) {
+if (strcmp($userObject["passwordHash"], sha1($_POST["password"])) == 0) {
 
 
         $_SESSION["loginSucceed"] = true;
