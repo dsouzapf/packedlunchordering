@@ -46,12 +46,8 @@
 
         if (isset($_SESSION["userRole"])) {
 
-            $canAddStmt = $connection->prepare("SELECT permAddUsers FROM roles WHERE roleId=:roleId");
-            $canAddStmt->bindParam(":roleId", $_SESSION["userRole"]);
-
-            $canAddStmt->execute();
-
-            $userCanAddUsers = $canAddStmt->fetch(PDO::FETCH_ASSOC)["permAddUsers"];
+            include_once("checkUserPermissions.php");
+            $userCanAddUsers = checkUserPermission($connection, "permAddUsers");
 
         }
         

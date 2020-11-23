@@ -1,4 +1,9 @@
-<?php include_once("session_init.php"); ?>
+<?php
+include_once("session_init.php");
+include_once("passwordGeneration.php");
+include_once("findRoleId.php");
+include_once("connection.php");
+?>
 <!DOCTYPE html>
 <html>
 
@@ -10,7 +15,6 @@
 <?php
 
 array_map("htmlspecialchars", $_POST);
-include_once("connection.php");
 
 $getUsernamesStmt = $connection->prepare("SELECT username FROM users WHERE username=:username");
 $getUsernamesStmt->bindParam(":username", $_POST["username"]);
@@ -23,7 +27,6 @@ if ($_ = $getUsernamesStmt->fetch(PDO::FETCH_ASSOC)) {
 
 $getUsernamesStmt->closeCursor();
 
-include_once("findRoleId.php");
 /*TAG: Change here for new permissions*/
 $foundRoleId = getOrMakeRoleIdByPermissions($connection,
 $_POST["permAddUsers"] == true,
@@ -39,7 +42,6 @@ $addUserStmt->bindParam(":roleId", $foundRoleId);
 
 $addUserStmt->bindParam(":username", $_POST["username"]);
 
-include_once("passwordGeneration.php");
 $generatedPassword = generatePasswordFromSeed($_POST["passwordSeed"]);
 $addUserStmt->bindParam(":password", $generatedPassword);
 

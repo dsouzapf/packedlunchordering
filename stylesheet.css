@@ -11,3 +11,9 @@
     margin: 5px 5px 5px 5px;
     display: inline-block;
 }
+
+.currentUserDisplay, .notLoggedInDisplay {
+
+    border-style: solid;
+
+}

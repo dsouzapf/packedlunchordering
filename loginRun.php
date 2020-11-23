@@ -1,4 +1,6 @@
-<?php include_once("session_init.php"); ?>
+<?php
+include_once("session_init.php");
+include_once("connection.php");?>
 <!DOCTYPE html>
 <html>
 
@@ -10,7 +12,6 @@
 <?php
 
 array_map("htmlspecialchars", $_POST);
-include_once("connection.php");
 
 $stmt = $connection->prepare("SELECT * FROM users WHERE username=:username;");
 $stmt->bindParam(":username", $_POST["username"]);
@@ -24,7 +25,8 @@ if (strcmp($userObject["passwordHash"], sha1($_POST["password"])) == 0) {
 
         $_SESSION["loginSucceed"] = true;
 
-        $_SESSION["userID"] = $userObject["userID"];
+        /*TAG: Change here for session user variables*/
+        $_SESSION["userId"] = $userObject["userId"];
         $_SESSION["username"] = $userObject["username"];
         $_SESSION["userRole"] = $userObject["roleId"];
         

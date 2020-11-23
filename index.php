@@ -1,4 +1,8 @@
-<?php include_once("session_init.php"); ?>
+<?php
+include_once("session_init.php");
+include_once("connection.php");
+include_once("checkUserPermissions.php");
+?>
 <!DOCTYPE html>
 <html>
 
@@ -8,15 +12,39 @@
     </head>
 
     <body>
+        
+        <div class="currentUserDisplay" style="display:<?php print(isset($_SESSION["userId"])  ? "inline-block" : "none") ?>;">
 
-        <!--Display current user-->
-        <div id="currentUserDisplay" display="<?php print(isset($_SESSION["userId"])  ? "default" : "none") ?>">
-        <p>Logged in as: 
-        <?php print($_SESSION["username"]) ?>
-        </p>
+            <p>Logged in as: 
+            <?php print($_SESSION["username"]) ?>
+            </p>
+
+            <button onclick="window.location.href='logoutRun.php'">Log Out</button>
+
         </div>
 
-        <!--Links to pages if availible to user-->
+        <div class="notLoggedInDisplay" style="display:<?php print(isset($_SESSION["userId"])  ? "none" : "inline-block") ?>;">
+
+            <p>Not logged in</p>
+            <button onclick="window.location.href='login.php'">Log In</button>
+
+        </div>
+
+        <?php
+
+        $canAddUsers = checkUserPermission($connection, "permAddUsers") == 1;
+
+        if ($canAddUsers) {
+        
+            print("
+        <div id=\"indexAddUsersDiv\">
+            <button onclick=\"window.location.href='userManagement.php'\">User Management</button>
+        </div>
+        ");
+
+        }
+
+        ?>
 
     </body>
 
