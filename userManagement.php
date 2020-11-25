@@ -94,6 +94,7 @@ include_once("checkUserPermissions.php");
             <!--/*TAG: Change here for new permissions*/-->
             Can Add Users: <input type="checkbox" name="permAddUsers"><br>
             Can Submit Orders: <input type="checkbox" name="permSubmitOrders"><br>
+            Can Edit Stock: <input type="checkbox" name="permEditStock"><br>
 
             <input type="submit">
 

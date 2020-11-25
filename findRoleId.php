@@ -3,10 +3,11 @@
 /*TAG: Change here for new permissions*/
 function getOrMakeRoleIdByPermissions($connection,
 $permAddUsers,
-$permSubmitOrders) {
+$permSubmitOrders,
+$permEditStock) {
 
     /*TAG: Change here for new permissions*/
-    $findStmt = findRoleIdByPermissions($connection, $permAddUsers, $permSubmitOrders);
+    $findStmt = findRoleIdByPermissions($connection, $permAddUsers, $permSubmitOrders, $permEditStock);
 
     if ($row = $findStmt->fetch(PDO::FETCH_ASSOC)) { /*Use found matching role*/
 
@@ -16,17 +17,18 @@ $permSubmitOrders) {
 
         /*TAG: Change here for new permissions*/
         $createRoleStmt = $connection->prepare("INSERT INTO roles
-        (roleId,permAddUsers,permSubmitOrders)
-        VALUES (NULL,:permAddUsers,:permSubmitOrders)");
+        (roleId,permAddUsers,permSubmitOrders,permEditStock)
+        VALUES (NULL,:permAddUsers,:permSubmitOrders,:permEditStock)");
 
         /*TAG: Change here for new permissions*/
         $createRoleStmt->bindParam(":permAddUsers", $permAddUsers);
         $createRoleStmt->bindParam(":permSubmitOrders", $permSubmitOrders);
+        $createRoleStmt->bindParam(":permEditStock", $permEditStock);
 
         $createRoleStmt->execute();
 
         /*TAG: Change here for new permissions*/
-        $findStmt = findRoleIdByPermissions($connection, $permAddUsers, $permSubmitOrders);
+        $findStmt = findRoleIdByPermissions($connection, $permAddUsers, $permSubmitOrders, $permEditStock);
 
         $row = $findStmt->fetch(PDO::FETCH_ASSOC);
 
@@ -41,16 +43,19 @@ $permSubmitOrders) {
 /*TAG: Change here for new permissions*/
 function findRoleIdByPermissions($connection,
 $permAddUsers,
-$permSubmitOrders) {
+$permSubmitOrders,
+$permEditStock) {
 
     /*TAG: Change here for new permissions*/
     $findStmt = $connection->prepare("SELECT roleId FROM ROLES WHERE
     permAddUsers=:permAddUsers AND
-    permSubmitOrders=:permSubmitOrders");
+    permSubmitOrders=:permSubmitOrders AND
+    permEditStock=:permEditStock");
 
     /*TAG: Change here for new permissions*/
     $findStmt->bindParam(":permAddUsers",$permAddUsers);
     $findStmt->bindParam(":permSubmitOrders",$permSubmitOrders);
+    $findStmt->bindParam(":permEditStock",$permEditStock);
 
     $findStmt->execute();
 

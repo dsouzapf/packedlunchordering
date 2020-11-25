@@ -30,7 +30,8 @@ $getUsernamesStmt->closeCursor();
 /*TAG: Change here for new permissions*/
 $foundRoleId = getOrMakeRoleIdByPermissions($connection,
 $_POST["permAddUsers"] == true,
-$_POST["permSubmitOrders"] == true
+$_POST["permSubmitOrders"] == true,
+$_POST["permEditStock"] == true
 );
 
 $addUserStmt = $connection->prepare(
