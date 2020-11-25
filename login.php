@@ -9,6 +9,8 @@
 
     <body>
 
+        <button onclick="window.location.href='index.php'">Home</button>
+
         <?php
         if (isset($_SESSION["loginSucceed"]) && !$_SESSION["loginSucceed"]) {
             print("<p class=\"failedSign\">Login Failed</p>");

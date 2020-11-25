@@ -1,17 +1,16 @@
-<?php
-include_once("session_init.php");
-?>
 <!DOCTYPE html>
 <html>
 
     <head>
-        <title> - Packed Lunch Ordering</title>
+        <title>Install Page</title>
         <link rel="stylesheet" href="stylesheet.css">
     </head>
 
     <body>
 
         <button onclick="window.location.href='index.php'">Home</button>
+
+        <!--TODO (confirm choice using alert?)-->
 
     </body>
 

@@ -1,5 +1,8 @@
-<?php include_once("session_init.php"); ?>
-<?php include_once("connection.php"); ?>
+<?php
+include_once("session_init.php");
+include_once("connection.php");
+include_once("checkUserPermissions.php");
+?>
 <!DOCTYPE html>
 <html>
 
@@ -10,33 +13,35 @@
 
     <body>
 
-    <div id="addUserLastUser" class="lastUserAddedSign">
+        <button onclick="window.location.href='index.php'">Home</button>
 
-        <?php
-        if (isset($_SESSION["lastUserUsername"])
-        && isset($_SESSION["lastUserPassword"])) {
+        <div id="addUserLastUser" class="lastUserAddedSign">
 
-            echo("<p>Last User:</p>");
-            echo("<p>Username: " . $_SESSION["lastUserUsername"] . "</p>");
-            echo("<p>Password: " . $_SESSION["lastUserPassword"] . "</p>");
+            <?php
+            if (isset($_SESSION["lastUserUsername"])
+            && isset($_SESSION["lastUserPassword"])) {
 
-        }
-        ?>
+                echo("<p>Last User:</p>");
+                echo("<p>Username: " . $_SESSION["lastUserUsername"] . "</p>");
+                echo("<p>Password: " . $_SESSION["lastUserPassword"] . "</p>");
 
-    </div>
+            }
+            ?>
 
-    <div class="failedSign">
+        </div>
 
-        <?php
-        if (isset($_SESSION["addUserFailed"])
-        && $_SESSION["addUserFailed"]) {
+        <div class="failedSign">
 
-            echo("<p>Failed to add user</p>");
+            <?php
+            if (isset($_SESSION["addUserFailed"])
+            && $_SESSION["addUserFailed"]) {
 
-        }
-        ?>
+                echo("<p>Failed to add user</p>");
 
-    </div>
+            }
+            ?>
+
+        </div>
 
         <?php
 
@@ -46,7 +51,6 @@
 
         if (isset($_SESSION["userRole"])) {
 
-            include_once("checkUserPermissions.php");
             $userCanAddUsers = checkUserPermission($connection, "permAddUsers");
 
         }
@@ -59,12 +63,15 @@
         
         ?>
 
-        <form action="addUsersRun.php" method="POST">
+        <form action="addUsersRun.php" method="POST" id="addUsersForm" style="display: inline-block;">
+
+            <fieldset>
+            <legend>Add User</legend>
 
             Username: <input type="text" name="username"><br>
             Password Seed: <input type="number" name="passwordSeed"><br>
 
-            <!--Have dropdown menu for houses-->
+            <!--Dropdown menu for houses-->
             House:
             <select name="houseId">
             <?php
@@ -79,6 +86,8 @@
 
             }
 
+            $getHousesStmt->closeCursor();
+
             ?>
             </select><br>
 
@@ -88,7 +97,33 @@
 
             <input type="submit">
 
+            </fieldset>
+
         </form>
+
+        <table id="userListDisplay">
+        
+            <?php
+            
+            $getUsersStmt = $connection->prepare("SELECT userId,username FROM users");
+
+            $getUsersStmt->execute();
+
+            while ($row = $getUsersStmt->fetch(PDO::FETCH_ASSOC)) {
+
+                $userId = $row["userId"];
+                $username = $row["username"];
+
+                print("<tr>");
+                print("<td>($userId)</td>");
+                print("<td>$username</td>");
+                print("</tr>");
+
+            }
+            
+            ?>
+        
+        </table>
 
     </body>
 

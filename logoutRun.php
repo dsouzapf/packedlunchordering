@@ -9,10 +9,7 @@
 
 <?php
 
-/*TAG: Change here for session user variables*/
-$_SESSION["userId"] = null;
-$_SESSION["username"] = null;
-$_SESSION["userRole"] = null;
+session_destroy();
 
 header("Location: login.php");
 
