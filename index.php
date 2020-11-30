@@ -2,6 +2,7 @@
 include_once("session_init.php");
 include_once("connection.php");
 include_once("checkUserPermissions.php");
+include_once("getItemById.php");
 ?>
 <!DOCTYPE html>
 <html>
@@ -46,10 +47,79 @@ include_once("checkUserPermissions.php");
 
         ?>
 
-        <!--TODO: button to stock editing-->
-        <!--TODO: button to meal ordering-->
+        <?php
 
-        <!--TODO: display ordered meals for user-->
+        $canEditStock = checkUserPermission($connection, "permEditStock") == 1;
+
+        if ($canEditStock) {
+
+            print("
+        <div id=\"indexEditStockDiv\">
+            <button onclick=\"window.location.href='stockManagement.php'\">Stock Management</button>
+        </div>
+        ");
+
+        }
+
+        ?>
+
+        <?php
+
+        $canSubmitOrders = checkUserPermission($connection, "permSubmitOrders") == 1;
+
+        if ($canSubmitOrders) {
+        
+            print("
+        <div id=\"indexSubmitOrdersDiv\">
+            <button onclick=\"window.location.href='orderMeal.php'\">Order Meal</button>
+        </div>
+        ");
+
+        }
+
+        ?>
+
+        <table id="orderedMealsTable" class="sideListDisplay">
+
+            <tr>
+                <th>Main</th>
+                <th>Side</th>
+                <th>Drink</th>
+                <th>Notes</th>
+                <th>Ready?</th>
+            </tr>
+
+            <?php
+            
+            /*TAG: change here for new item types*/
+            $getOrderStmt = $connection->prepare("SELECT mainItemId,sideItemId,drinkItemId,prepared,notes FROM orders WHERE userId=:userId");
+            $getOrderStmt->bindParam(":userId",$_SESSION["userId"]);
+            $getOrderStmt->execute();
+
+            while ($row = $getOrderStmt->fetch(PDO::FETCH_ASSOC)) {
+
+                /*TAG: change here for new item types*/
+                $mainName = getItemById($connection, $row["mainItemId"]);
+                $sideName = getItemById($connection, $row["sideItemId"]);
+                $drinkName = getItemById($connection, $row["drinkItemId"]);
+
+                print("<tr>");
+
+                print("<td>" . $mainName . "</td>");
+                print("<td>" . $sideName . "</td>");
+                print("<td>" . $drinkName . "</td>");
+                print("<td>" . $row["notes"] . "</td>");
+                print("<td>" . ($row["prepared"] ? "Ready" : "Not Ready") . "</td>");
+
+                print("</tr>");
+
+            }
+
+            $getOrderStmt->closeCursor();
+            
+            ?>
+
+        </table>
 
     </body>
 

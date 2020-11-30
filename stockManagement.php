@@ -12,6 +12,8 @@ include_once("connection.php");
 
     <body>
 
+        <button onclick="window.location.href='index.php'">Home</button><br>
+
         <form action="editStockRun.php" method="POST" class="inline-block">
 
             <fieldset>
@@ -62,6 +64,7 @@ include_once("connection.php");
 
         </form>
 
+        <!--TODO: allow item Removal-->
         <table class="sideListDisplay">
 
                 <tr>

@@ -74,7 +74,7 @@ include_once("connection.php");
 
                 <!--/*TAG: change here for new item types*/-->
 
-                Main Item: <select name="mainItem">
+                Main Item: <select name="mainItemId">
                 <?php
                 foreach ($mainItems as $item) {
                     print("<option value=\"" . $item->id . "\">" . $item->name . "</option>");
@@ -82,7 +82,7 @@ include_once("connection.php");
                 ?>
                 </select><br>
 
-                Side Item: <select name="sideItem">
+                Side Item: <select name="sideItemId">
                 <?php
                 foreach ($sideItems as $item) {
                     print("<option value=\"" . $item->id . "\">" . $item->name . "</option>");
@@ -90,7 +90,7 @@ include_once("connection.php");
                 ?>
                 </select><br>
 
-                Drink Item: <select name="drinkItem">
+                Drink Item: <select name="drinkItemId">
                 <?php
                 foreach ($drinkItems as $item) {
                     print("<option value=\"" . $item->id . "\">" . $item->name . "</option>");
