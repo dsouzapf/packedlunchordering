@@ -6,15 +6,13 @@ include_once("connection.php");
 <html>
 
     <head>
-        <title>Edit Stock - Packed Lunch Ordering</title>
+        <title>Stock Management - Packed Lunch Ordering</title>
         <link rel="stylesheet" href="stylesheet.css">
     </head>
 
     <body>
 
-        <!--TODO: display current stock levels-->
-
-        <form action="editStockRun.php" method="POST">
+        <form action="editStockRun.php" method="POST" class="inline-block">
 
             <fieldset>
 
@@ -41,9 +39,9 @@ include_once("connection.php");
 
             </fieldset>
 
-        </form>
+        </form><br>
 
-        <form action="addStockItemRun.php" method="POST">
+        <form action="addStockItemRun.php" method="POST" class="inline-block">
 
                 <fieldset>
 
@@ -63,6 +61,60 @@ include_once("connection.php");
                 </fieldset>
 
         </form>
+
+        <table class="sideListDisplay">
+
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Stock</th>
+                </tr>
+                
+                <?php
+
+                $getStockStmt = $connection->prepare("SELECT id,name,stock,itemType FROM itemstock");
+
+                $getStockStmt->execute();
+
+                while ($row = $getStockStmt->fetch(PDO::FETCH_ASSOC)) {
+
+                    $itemId = $row["id"];
+                    $itemName = $row["name"];
+                    $itemStock = $row["stock"];
+
+                    $itemType = "Invalid";
+                    /*TAG: change here for new item types*/
+                    switch ($row["itemType"]) {
+
+                        case 0:
+                            $itemType = "Main";
+                            break;
+
+                        case 1:
+                            $itemType = "Side";
+                            break;
+
+                        case 2:
+                            $itemType = "Drink";
+                            break;
+
+                    }
+
+                    print("<tr>");
+                    print("<td>($itemId)</td>");
+                    print("<td>$itemName</td>");
+                    print("<td>$itemType</td>");
+                    print("<td>$itemStock</td>");
+                    print("</tr>");
+
+                }
+
+                $getStockStmt->closeCursor();
+
+                ?>
+
+        </table>
 
     </body>
 

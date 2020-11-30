@@ -63,7 +63,7 @@ include_once("checkUserPermissions.php");
         
         ?>
 
-        <form action="addUsersRun.php" method="POST" id="addUsersForm" style="display: inline-block;">
+        <form action="addUsersRun.php" method="POST" id="addUsersForm" class="inline-block">
 
             <fieldset>
             <legend>Add User</legend>
@@ -100,9 +100,9 @@ include_once("checkUserPermissions.php");
 
             </fieldset>
 
-        </form>
+        </form><br>
 
-        <table id="userListDisplay">
+        <table class="sideListDisplay">
         
             <?php
             

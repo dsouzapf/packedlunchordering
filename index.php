@@ -46,6 +46,11 @@ include_once("checkUserPermissions.php");
 
         ?>
 
+        <!--TODO: button to stock editing-->
+        <!--TODO: button to meal ordering-->
+
+        <!--TODO: display ordered meals for user-->
+
     </body>
 
 </html>

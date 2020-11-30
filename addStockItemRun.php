@@ -14,7 +14,7 @@ include_once("connection.php");
 
 array_map("htmlspecialchars", $_POST);
 
-$addItemStmt = $connection->prepare("INSERT INTO itemstock (id,name,stock,itemtype) VALUES (NULL,:itemName,:stock,:itemtype)");
+$addItemStmt = $connection->prepare("INSERT INTO itemstock (id,name,stock,itemtype) VALUES (NULL,:itemName,:stock,:itemType)");
 
 $addItemStmt->bindParam(":itemName", $_POST["name"]);
 $addItemStmt->bindParam(":stock", $_POST["initialStock"]);
