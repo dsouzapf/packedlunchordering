@@ -32,6 +32,24 @@ include_once("getItemById.php");
 
         ?>
 
+        <!--/*TAG: change here for filter options*/-->
+
+        <!--All filter options should have a default option with value "null"-->
+
+        <div id="viewOrdersFilters">
+
+            House: <select id="selectOrdersFilterByHouse" class="viewOrdersFilterParameter">
+                <option value="null" selected>-</option>
+            </select>
+
+            Prepared?: <select id="selectOrdersFilterByPrepared" class="viewOrdersFilterParameter">
+                <option value="null" selected>-</option>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </select>
+
+        </div>
+
         <script>
 
         class Order {
@@ -101,7 +119,7 @@ include_once("getItemById.php");
 
         </script>
 
-        <table id="viewOrdersTable">
+        <table>
 
             <tr>
 
@@ -120,6 +138,7 @@ include_once("getItemById.php");
             </tr>
 
         </table>
+        <table id="viewOrdersTable"> </table>
 
         <!--TODO: display orders using js (viewOrdersScript.js)-->
 

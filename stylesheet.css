@@ -30,3 +30,10 @@
 .inline-block {
     display: inline-block;
 }
+
+#viewOrdersFilters {
+    
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+}
