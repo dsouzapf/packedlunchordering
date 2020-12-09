@@ -31,12 +31,13 @@ $getUsernamesStmt->closeCursor();
 $foundRoleId = getOrMakeRoleIdByPermissions($connection,
 $_POST["permAddUsers"] == true,
 $_POST["permSubmitOrders"] == true,
-$_POST["permEditStock"] == true
+$_POST["permEditStock"] == true,
+false /*Only the admin should have permission to reset the database*/
 );
 
 $addUserStmt = $connection->prepare(
-"INSERT INTO users(userId,roleId,username,passwordHash,houseId)
-VALUES (NULL,:roleId,:username,SHA1(:password),:houseId)"
+"INSERT INTO users(userId,roleId,username,passwordHash,houseId,surname,forename)
+VALUES (NULL,:roleId,:username,SHA1(:password),:houseId,:surname,:forename)"
 );
 
 $addUserStmt->bindParam(":roleId", $foundRoleId);
@@ -47,6 +48,10 @@ $generatedPassword = generatePasswordFromSeed($_POST["passwordSeed"]);
 $addUserStmt->bindParam(":password", $generatedPassword);
 
 $addUserStmt->bindParam(":houseId", $_POST["houseId"]);
+
+$addUserStmt->bindParam(":surname",$_POST["surname"]);
+
+$addUserStmt->bindParam(":forename",$_POST["forename"]);
 
 $addUserStmt->execute();
 

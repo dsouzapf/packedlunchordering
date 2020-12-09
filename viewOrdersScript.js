@@ -109,8 +109,6 @@ window.onload = function() {
 
 }
 
-//TODO: allow filtering - use {ordersArray}.filter(function(ele) { return ele.something; });
-
 function displayAllOrders() {
     setTableOrders(orders);
 }

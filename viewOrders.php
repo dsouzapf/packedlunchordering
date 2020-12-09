@@ -140,8 +140,6 @@ include_once("getItemById.php");
         </table>
         <table id="viewOrdersTable"> </table>
 
-        <!--TODO: display orders using js (viewOrdersScript.js)-->
-
         <script src="viewOrdersScript.js"></script>
 
     </body>

@@ -91,6 +91,9 @@ include_once("checkUserPermissions.php");
             ?>
             </select><br>
 
+            Surname: <input type="text" name="surname"><br>
+            Forename: <input type="text" name="forename"><br>
+
             <!--/*TAG: Change here for new permissions*/-->
             Can Add Users: <input type="checkbox" name="permAddUsers"><br>
             Can Submit Orders: <input type="checkbox" name="permSubmitOrders"><br>
