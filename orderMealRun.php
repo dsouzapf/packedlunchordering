@@ -26,7 +26,16 @@ $addOrder->bindParam(":notes",$_POST["notes"]);
 $addOrder->execute();
 $addOrder->closeCursor();
 
-//TODO: reduce stock count of items used
+/*TAG: change here for new item types*/
+foreach (array($_POST["mainItemId"], $_POST["sideItemId"], $_POST["drinkItemId"]) as $itemId) {
+
+    $reduceStmt = $connection->prepare("UPDATE itemstock SET stock=stock-1 WHERE id=:itemId");
+    $reduceStmt->bindParam(":itemId",$itemId);
+    $reduceStmt->execute();
+
+    $reduceStmt->closeCursor();
+
+}
 
 header("Location: index.php");
 

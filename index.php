@@ -79,6 +79,22 @@ include_once("getItemById.php");
 
         ?>
 
+        <?php
+
+        $canSubmitOrders = checkUserPermission($connection, "permViewOrders") == 1;
+
+        if ($canSubmitOrders) {
+
+            print("
+        <div id=\"indexViewOrdersDiv\">
+            <button onclick=\"window.location.href='viewOrders.php'\">View Orders</button>
+        </div>
+        ");
+
+        }
+
+        ?>
+
         <table id="orderedMealsTable" class="sideListDisplay">
 
             <tr>

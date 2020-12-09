@@ -20,8 +20,6 @@ include_once("connection.php");
 
                 <legend>Order Meal</legend>
 
-                <!--TODO: mainItem, sideItem, drinkItem, notes-->
-
                 <?php
 
                 class Item {
