@@ -20,6 +20,16 @@ include_once("getItemById.php");
             <?php print($_SESSION["username"]) ?>
             </p>
 
+            <div id="changePasswordSuccessDiv">
+                <?php
+                if (isset($_SESSION["changePasswordSuccess"])){
+                    print("<p>Successfully changed password</p>");
+                    unset($_SESSION["changePasswordSuccess"]);
+                }
+                ?>
+            </div>
+            <button onclick="window.location.href='changePassword.php'">Change Password</button><br>
+
             <button onclick="window.location.href='logoutRun.php'">Log Out</button>
 
         </div>
