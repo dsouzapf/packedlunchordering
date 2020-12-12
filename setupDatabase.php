@@ -54,7 +54,27 @@ include_once("adminDetails.php");
             shortName VARCHAR(32) NOT NULL
         )");
 
-        //TODO: add houses
+        $connection->exec("INSERT INTO houses (houseId,fullName,shortName) VALUES
+        (NULL,\"School\",\"Sch\")");
+        $connection->exec("INSERT INTO houses (houseId,fullName,shortName) VALUES
+        (NULL,\"Laundimer\",\"Ldr\")");
+        $connection->exec("INSERT INTO houses (houseId,fullName,shortName) VALUES
+        (NULL,\"Bramston\",\"B\")");
+
+        $connection->exec("INSERT INTO houses (houseId,fullName,shortName) VALUES
+        (NULL,\"Sanderson\",\"Sa\")");
+        $connection->exec("INSERT INTO houses (houseId,fullName,shortName) VALUES
+        (NULL,\"Dryden\",\"D\")");
+        $connection->exec("INSERT INTO houses (houseId,fullName,shortName) VALUES
+        (NULL,\"New\",\"N\")");
+
+        $connection->exec("INSERT INTO houses (houseId,fullName,shortName) VALUES
+        (NULL,\"Scott\",\"Sco\")");
+        $connection->exec("INSERT INTO houses (houseId,fullName,shortName) VALUES
+        (NULL,\"Berrystead\",\"Be\")");
+
+        $connection->exec("INSERT INTO houses (houseId,fullName,shortName) VALUES
+        (NULL,\"Laxton\",\"La\")");
 
         /*Create itemstock table*/
         $connection->exec("CREATE TABLE itemstock (
