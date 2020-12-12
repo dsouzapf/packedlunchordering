@@ -72,6 +72,7 @@ include_once("connection.php");
                     <th>Name</th>
                     <th>Type</th>
                     <th>Stock</th>
+                    <th><!--Column for removal button--></th>
                 </tr>
                 
                 <?php
@@ -109,6 +110,11 @@ include_once("connection.php");
                     print("<td>$itemName</td>");
                     print("<td>$itemType</td>");
                     print("<td>$itemStock</td>");
+                    print("<td><button onclick=\"
+                    if (confirm('Are you sure you want to delete this item?')) {
+                        window.location.href='removeStockItemRun.php?id=$itemId';
+                    }
+                    \">Remove</button></td>");
                     print("</tr>");
 
                 }
