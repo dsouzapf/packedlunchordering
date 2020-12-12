@@ -18,6 +18,8 @@ include_once("getItemById.php");
 
         <?php
 
+        $userCanViewOrders = false;
+
         if (isset($_SESSION["userRole"])) {
 
             $userCanViewOrders = checkUserPermission($connection, "permViewOrders");

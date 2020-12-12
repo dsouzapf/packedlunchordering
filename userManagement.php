@@ -49,6 +49,8 @@ include_once("checkUserPermissions.php");
 
         array_map("htmlspecialchars", $_SESSION);
 
+        $userCanAddUsers = false;
+
         if (isset($_SESSION["userRole"])) {
 
             $userCanAddUsers = checkUserPermission($connection, "permAddUsers");
@@ -105,29 +107,88 @@ include_once("checkUserPermissions.php");
 
         </form><br>
 
-        <table class="sideListDisplay">
-        
-            <?php
+        <div id="userManagementLists" class="sideListDisplay">
+
+            <table>
+
+                <tr>
+                    <th>(User Id)</th>
+                    <th>Role Id</th>
+                    <th>Username</th>
+                    <th>House</th>
+                    <th>Name</th>
+                </tr>
             
-            $getUsersStmt = $connection->prepare("SELECT userId,username FROM users");
+                <?php
+                
+                $getUsersStmt = $connection->prepare("SELECT userId,roleId,username,houses.shortName as houseInitials,surname,forename FROM users LEFT OUTER JOIN houses ON users.houseId=houses.houseId");
 
-            $getUsersStmt->execute();
+                $getUsersStmt->execute();
+                
+                while ($row = $getUsersStmt->fetch(PDO::FETCH_ASSOC)) {
 
-            while ($row = $getUsersStmt->fetch(PDO::FETCH_ASSOC)) {
+                    $userId = $row["userId"];
+                    $roleId = $row["roleId"];
+                    $username = $row["username"];
+                    $shortName = $row["houseInitials"] != null ? $row["houseInitials"] : "n/a";
+                    $surname = $row["surname"];
+                    $forename = $row["forename"];
+                    $name = $row["forename"] != null ? "$surname, $forename" : $surname;
 
-                $userId = $row["userId"];
-                $username = $row["username"];
+                    print("<tr>");
+                    print("<td>($userId)</td>");
+                    print("<td>$roleId</td>");
+                    print("<td>$username</td>");
+                    print("<td>$shortName</td>");
+                    print("<td>$name</td>");
+                    print("</tr>");
 
-                print("<tr>");
-                print("<td>($userId)</td>");
-                print("<td>$username</td>");
-                print("</tr>");
-
-            }
+                }
+                
+                ?>
             
-            ?>
-        
-        </table>
+            </table>
+
+            <table id="userManagementRoleTable">
+
+                <tr>
+                    <th>Role Id</th>
+                    <!--/*TAG: Change here for new permissions*/-->
+                    <th>Add Users</th>
+                    <th>Submit Orders</th>
+                    <th>Edit Stock</th>
+                    <th>View Orders</th>
+                </tr>
+
+                <?php
+                
+                $getRolesStmt = $connection->prepare("SELECT roleId,permAddUsers,permSubmitOrders,permEditStock,permViewOrders FROM roles");
+
+                $getRolesStmt->execute();
+
+                while ($row = $getRolesStmt->fetch(PDO::FETCH_ASSOC)) {
+
+                    $id = $row["roleId"];
+                    $addUsers = $row["permAddUsers"] ? "Y" : "N";
+                    $submitOrders = $row["permSubmitOrders"] ? "Y" : "N";
+                    $editStock = $row["permEditStock"] ? "Y" : "N";
+                    $viewOrders = $row["permViewOrders"] ? "Y" : "N";
+
+                    print("<tr>");
+                    print("<td>$id</td>");
+                    print("<td>$addUsers</td>");
+                    print("<td>$submitOrders</td>");
+                    print("<td>$editStock</td>");
+                    print("<td>$viewOrders</td>");
+                    print("</tr>");
+
+                }
+                
+                ?>
+
+            </table>
+
+        </div>
 
     </body>
 

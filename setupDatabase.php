@@ -16,32 +16,31 @@ include_once("adminDetails.php");
 
         <button onclick="window.location.href='index.php'">Home</button>
 
-        <!--TODO-->
-
         <script>
         if (!confirm("Are you sure you want to reset the database?")) { window.location.href="index.php" }
         </script>
 
         <?php
-/* TODO: uncomment once page working
+
+        $userCanResetDatabase = false;
+
         if (isset($_SESSION["userRole"])) {
 
-            $userCanViewOrders = checkUserPermission($connection, "permResetDatabase");
+            $userCanResetDatabase = checkUserPermission($connection, "permResetDatabase");
 
         }
 
-        if (!$userCanViewOrders || !isset($_SESSION["userRole"])) {
-            
-            header("Location: index.php");
+        if (!$userCanResetDatabase || !isset($_SESSION["userRole"])) {
+            echo "$userCanResetDatabase<br>";
+            //header("Location: index.php");
 
         }
-*/
+
         ?>
 
         <?php
-        
-        //TODO: reset tables
-        //TODO: add admin role with all permissions (esp. permResetDatabase)
+
+        try {
 
         /*Recreate Database*/
         $connection->exec("DROP DATABASE packedlunchordering");
@@ -54,6 +53,8 @@ include_once("adminDetails.php");
             fullName VARCHAR(32) NOT NULL,
             shortName VARCHAR(32) NOT NULL
         )");
+
+        //TODO: add houses
 
         /*Create itemstock table*/
         $connection->exec("CREATE TABLE itemstock (
@@ -112,8 +113,15 @@ include_once("adminDetails.php");
 
         $addAdminUserStmt->execute();
         
-        print("<h2>Database Reset Successfully</h2>");
+        print("<h2>Database Reset</h2>");
         session_destroy();
+
+        } catch (Exception $e) {
+
+            print("<h2>Failed to Reset Database:</h2><br>");
+            print($e->getMessage());
+            
+        }
         
         ?>
 
