@@ -1,9 +1,6 @@
 <?php
 
-$serverName="localhost";
-$dbname="packedlunchordering";
-$username="root";
-$password="";
+include_once("databaseDetails.php");
 
 try {
 
