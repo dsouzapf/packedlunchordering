@@ -22,6 +22,8 @@ include_once("adminDetails.php");
 
         <?php
 
+        /*
+
         $userCanResetDatabase = false;
 
         if (isset($_SESSION["userRole"])) {
@@ -35,6 +37,8 @@ include_once("adminDetails.php");
             //header("Location: index.php");
 
         }
+
+        */
 
         ?>
 
